@@ -1,0 +1,2 @@
+websockets==10.4
+torch==2.2.2
