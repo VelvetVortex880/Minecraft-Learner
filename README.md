@@ -1,13 +1,13 @@
 # Minecraft-Learner
 
-This project provides a simple Mineflayer based bot controlled via a Python server. The server uses a small RL model and WebSockets to communicate with the bot. The bot can follow players, pathfind, auto-eat, use PVP, and react to chat. A basic environment viewer is provided via prismarine-viewer.
+This project provides a Mineflayer bot controlled by a Python server running a lightweight PPO reinforcement learning agent. The bot sends observations (position, health and inventory) to the server over WebSockets and receives movement, jump, attack and other actions in response. It can follow players, pathfind, auto-eat, engage in PvP and visualise the world using `prismarine-viewer`.
 
 **Note**: Due to environment limitations the npm dependencies are not installed here. You must run `npm install` yourself before using the bot. The Python server requires Python 3.8+ and PyTorch 2.2.
 
 ## Directory structure
 
 - `bot/` – Node.js bot implementation
-- `server/` – Python WebSocket server and RL stub
+- `server/` – Python WebSocket server with a simple PPO agent storing its learning data in `rl.db`
 
 ## Installation
 
@@ -42,7 +42,7 @@ Set environment variables `MC_HOST`, `MC_PORT`, `MC_USER` to configure the Minec
 
 ## Usage
 
-Once the bot is online it will log into the Minecraft server and connect to the Python server. You can send instructions to the server over WebSockets or modify `server.py` to use GPT/TogetherAI for natural language conversion. Sending the message `train` will run a dummy training loop for the RL model and save it to `model.pt`.
+Once the bot is online it logs into the Minecraft server and starts sending observations to the Python server. The server chooses an action with its PPO policy and sends it back to the bot. Transitions are recorded in the `rl.db` database and the model is updated regularly. You can adapt `server.py` to plug in language models or additional reward logic.
 
 ## Building a Windows installer
 
