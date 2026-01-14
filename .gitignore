@@ -1,0 +1,5 @@
+venv/
+node_modules/
+model.pt
+rl.db
+__pycache__/
